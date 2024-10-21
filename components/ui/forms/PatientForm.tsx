@@ -75,7 +75,7 @@ export const PatientForm = () => {
           control={form.control}
           name="phone"
           label="Phone number"
-          placeholder="(555) 123-4567"
+          placeholder="9876543210"
         />
         <SubmitButton isLoading={isLoading}>Get Started</SubmitButton>
       </form>
