@@ -84,13 +84,11 @@ export const getRecentAppointmentList = async () => {
       },
       initialCounts
     );
-
     const data = {
       totalCount: appointments.total,
       ...counts,
       documents: appointments.documents,
     };
-
     return parseStringify(data);
   } catch (error) {
     console.error(
@@ -135,7 +133,7 @@ export const updateAppointment = async ({
 
     if (!updatedAppointment) throw Error;
 
-    const smsMessage = `Greetings from CarePulse. ${
+    const smsMessage = `Greetings from HealthHub. ${
       type === "schedule"
         ? `Your appointment is confirmed for ${
             formatDateTime(appointment.schedule!, timeZone).dateTime
@@ -145,7 +143,6 @@ export const updateAppointment = async ({
           } is cancelled. Reason:  ${appointment.cancellationReason}`
     }.`;
     await sendSMSNotification(userId, smsMessage);
-
     revalidatePath("/admin");
     return parseStringify(updatedAppointment);
   } catch (error) {
@@ -161,7 +158,6 @@ export const getAppointment = async (appointmentId: string) => {
       APPOINTMENT_COLLECTION_ID!,
       appointmentId
     );
-
     return parseStringify(appointment);
   } catch (error) {
     console.error(

@@ -21,6 +21,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import CustomFormField, { FormFieldType } from "@/components/CustomFormField";
 import SubmitButton from "@/components/SubmitButton";
 import { Form } from "@/components/ui/form";
+import { getPatient } from "@/lib/actions/patient.actions";
 
 export const AppointmentForm = ({
   userId,
@@ -56,6 +57,7 @@ export const AppointmentForm = ({
   const onSubmit = async (
     values: z.infer<typeof AppointmentFormValidation>
   ) => {
+    const patient = await getPatient(userId);
     setIsLoading(true);
 
     let status;
@@ -71,10 +73,10 @@ export const AppointmentForm = ({
     }
 
     try {
-      if (type === "create" && patientId) {
+      if (type === "create" && patient) {
         const appointment = {
           userId,
-          patient: patientId,
+          patient: patient?.$id,
           primaryPhysician: values.primaryPhysician,
           schedule: new Date(values.schedule),
           reason: values.reason!,
@@ -134,9 +136,7 @@ export const AppointmentForm = ({
         {type === "create" && (
           <section className="mb-12 space-y-4">
             <h1 className="header">New Appointment</h1>
-            <p className="text-dark-700">
-              Request a new appointment.
-            </p>
+            <p className="text-dark-700">Request a new appointment.</p>
           </section>
         )}
 
